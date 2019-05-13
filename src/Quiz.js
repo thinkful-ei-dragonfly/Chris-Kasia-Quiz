@@ -10,7 +10,8 @@ class Quiz {
     // Array of Question instances
     this.asked = [];
     this.active = false;
-
+    this.score = 0;
+    this.scoreHistory = 0;
     // TASK: Add more props here per the exercise
 
   }
@@ -19,6 +20,8 @@ class Quiz {
   startGame() {
     this.active = true;
   }
+
+  
 }
 
 export default Quiz;
