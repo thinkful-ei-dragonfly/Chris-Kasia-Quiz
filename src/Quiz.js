@@ -1,7 +1,7 @@
 import Question from './Question';
 import TriviaApi from './TriviaApi';
 
-class Quiz {
+class Quiz extends Model {
 
   static DEFAULT_QUIZ_LENGTH = 2;
 

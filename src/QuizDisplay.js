@@ -1,0 +1,1 @@
+class QuizDisplay extends Renderer {}

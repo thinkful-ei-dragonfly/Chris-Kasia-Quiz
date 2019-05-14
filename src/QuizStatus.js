@@ -1,0 +1,1 @@
+class QuizStatus extends Renderer {}
