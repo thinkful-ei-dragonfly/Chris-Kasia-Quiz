@@ -28,9 +28,11 @@ class Quiz {
         question.text = element.question;
         question.answers = [element.correct_answer,...element.incorrect_answers]; //this is an array
         question.correctAnswer = element.correct_answer;
-        question.playerAnswer = ''; 
+        question.submittedAnswer = ''; 
         this.unasked.push(question);
     });
+    askQuestions(this.unasked)
+
   })
   .catch(error => {
     console.log(error);
@@ -38,10 +40,18 @@ class Quiz {
   console.log(this.unasked);
 };
 
- askQuestions(answer) {
-   this.unasked.forEach(question => {
-    question.submittedAnswer = answer;
-   })
+ askQuestions(questions) {
+   questions.forEach(question => {
+    //display the question 
+        //something like. $('div').html(generateString(question))
+    //take in a user answer
+        //question.submittedAnswer = $('click').event.Target().val()
+    //compare the user answer to the correct one, plus one if correct
+        //if (question.submittedAnswer === question.correctAnswer)
+            //scorechange() 
+   });
+   scoreHistory + scoreChange();
+   endGame();
  }
 
 
