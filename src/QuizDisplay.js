@@ -1,5 +1,5 @@
 import Renderer from './lib/Renderer';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
+
 
 class QuizDisplay extends Renderer {
     _generateIntro() {
