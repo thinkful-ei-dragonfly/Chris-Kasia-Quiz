@@ -1,18 +1,20 @@
 import Question from './Question';
 import TriviaApi from './TriviaApi';
+import Model from './lib/Model';
 
 class Quiz extends Model {
 
   static DEFAULT_QUIZ_LENGTH = 2;
 
   constructor() {
+    super();
     // Array of Question instances
     this.unasked = [];
     // Array of Question instances
     this.asked = [];
     this.active = false;
     this.score = 0;
-    this.scoreHistory = 0;
+    this.scoreHistory = [];
     // TASK: Add more props here per the exercise
 
   }
@@ -28,39 +30,48 @@ class Quiz extends Model {
         question.text = element.question;
         question.answers = [element.correct_answer,...element.incorrect_answers]; //this is an array
         question.correctAnswer = element.correct_answer;
-        question.playerAnswer = ''; 
+        question.submittedAnswer = ''; 
         this.unasked.push(question);
     });
+    this.asked.unshift(this.unasked.shift());
+    console.log(this.unasked);
+    console.log(this.asked);
+    this.currentQuestion();
+    this.askedQuestion();
+    this.update();
   })
   .catch(error => {
     console.log(error);
   });
-  console.log(this.unasked);
 };
 
- askQuestions(answer) {
-   this.unasked.forEach(question => {
-    question.submittedAnswer = answer;
-   })
- }
+currentQuestion() {
+  return console.log(this.asked[this.asked.length-1]);
+}
 
-
-  questionsAsked() {
+nextQuestion() {
+  if (this.active && this.unasked.length > 0) {
     this.asked.push(this.unasked.pop());
-    console.log(this.asked);
-    console.log(this.unasked);
+    this.update();
+}
+}
+
+scoreChange() {
+  this.score = this.score + 1;
+}
+
+changeScoreHistory() {
+  if (this.unasked.length === 0) {
+    this.scoreHistory.push
   }
-
-  scoreChange() {
-    this.score = this.score + 1;
-  }
+}
 
 
-  endGame() {
+endGame() {
     this.active = false;
-  }
+}
 
   
-}
+} 
 
 export default Quiz;
