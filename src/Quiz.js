@@ -51,8 +51,7 @@ nextQuestion() {
   if (this.unasked.length === 0) {
     this.active = false;
     this.scoreHistory.unshift(this.score);
-    this.update();
-    return null
+    return endGame();
   }
   this.asked.unshift(this.unasked.pop());
     this.update();
@@ -70,12 +69,9 @@ changeScoreHistory() {
 }
 
 endGame() {
-    if (this.unasked.length === 0)
     this.active = false;
     this.update();
 }
-
-  
 } 
 
 export default Quiz;
