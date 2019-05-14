@@ -15,11 +15,11 @@ class QuizDisplay extends Renderer {
   }
 
     _generateIntro() {
-        return 
-        `<div>
+      return  `<div>
         <p>Welcome to the Quiz!</p>
         <p><button class="start-game">Start</button></p>
         </div>`
+      
     }
 
     // _generateAskQuestion(Questions) {
