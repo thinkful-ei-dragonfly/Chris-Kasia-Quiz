@@ -1,24 +1,19 @@
 'use strict';
 
 
-const BASE_URL= `https://opentdb.com/api.php?amount=5&type=multiple`;
+
 
 class TriviaApi {
-  baseFetchMethod() {
-        let error;
-        return fetch(BASE_URL)
+  static BASE_URL= `https://opentdb.com/api.php?type=multiple`;
+  baseFetchMethod(amount = 10) {
+        const url = new URL(TriviaApi.BASE_URL);
+        url.searchParams.set('amount', amount);
+        return fetch(url)
           .then(response => {
             // if (!response.ok) {
             //   error = { code: response.status };
             // }
             return response.json();
-          })
-          .then(data => {
-            // if (error) {
-            //   error.message = data.message;
-            //   return Promise.reject(error);
-            //}
-            return data;
           });
       }
 

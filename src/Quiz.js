@@ -4,7 +4,7 @@ import Model from './lib/Model';
 
 class Quiz extends Model {
 
-  static DEFAULT_QUIZ_LENGTH = 2;
+  static DEFAULT_QUIZ_LENGTH = 5;
 
   constructor() {
     super();
@@ -15,29 +15,23 @@ class Quiz extends Model {
     this.active = false;
     this.score = 0;
     this.scoreHistory = [];
+    this.api = new TriviaApi();
     // TASK: Add more props here per the exercise
 
   }
 
   // Example method:
   startGame() {
+    this.asked = [];
+    this.unasked = [];
+    this.score = 0;
     this.active = true;
-    const triviaGame = new TriviaApi();
-    triviaGame.baseFetchMethod().then(res => {
+    this.api.baseFetchMethod(Quiz.DEFAULT_QUIZ_LENGTH).then(res => {
         let array = res.results;
         array.forEach(element => {
-        let question = new Question();
-        question.text = element.question;
-        question.answers = [element.correct_answer,...element.incorrect_answers]; //this is an array
-        question.correctAnswer = element.correct_answer;
-        question.submittedAnswer = ''; 
-        this.unasked.push(question);
+        this.unasked.push(new Question(element));
     });
-    this.asked.unshift(this.unasked.shift());
-    console.log(this.unasked);
-    console.log(this.asked);
-    this.currentQuestion();
-    this.askedQuestion();
+    this.nextQuestion();
     this.update();
   })
   .catch(error => {
@@ -46,14 +40,23 @@ class Quiz extends Model {
 };
 
 currentQuestion() {
-  return console.log(this.asked[this.asked.length-1]);
+  return this.asked[0];
 }
 
 nextQuestion() {
-  if (this.active && this.unasked.length > 0) {
-    this.asked.push(this.unasked.pop());
+  const current = this.currentQuestion();
+  if (current && current.submittedAnswer === null) {
+    throw new Error('must answer the question')
+  }
+  if (this.unasked.length === 0) {
+    this.active = false;
+    this.scoreHistory.unshift(this.score);
     this.update();
-}
+    return null
+  }
+  this.asked.unshift(this.unasked.pop());
+    this.update();
+    return this.asked[0];
 }
 
 scoreChange() {
@@ -66,9 +69,10 @@ changeScoreHistory() {
   }
 }
 
-
 endGame() {
+    if (this.unasked.length === 0)
     this.active = false;
+    this.update();
 }
 
   
