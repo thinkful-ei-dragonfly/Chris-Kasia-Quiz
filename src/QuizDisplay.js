@@ -5,7 +5,7 @@ class QuizDisplay extends Renderer {
   getEvents() {
     return {
       'click .start-game': 'handleStartGame',
-      // 'submit form': `handleSubmitAnswer`
+      'submit form': `handleSubmitAnswer`
     };
   }
 
@@ -13,6 +13,8 @@ class QuizDisplay extends Renderer {
     this.model.startGame();
 
   }
+
+  handleSubmitGame()
 
     _generateIntro() {
       return  `<div>
@@ -22,22 +24,22 @@ class QuizDisplay extends Renderer {
       
     }
 
-    // _generateAskQuestion(Questions) {
-    //     const currentAnswer = allAnswers.map(answer => {
-    //                 return `<input type ="radio" id ="${index}" name="answer" value="#${answer}/>
-    //                 <label for"${index}>${answer}</label>`
-    //             }).join(''); 
-    //     return `
-    //             <div>
-    //                 <p>${question.text}</p>
-    //                 <form>
-    //                 ${answers}
-    //                     <div>
-    //                         <input type="submit"/>
-    //                 </form>
-    //             </div>
-    //     `
-    // }
+    _generateAskQuestion(Questions) {
+        const currentAnswer = allAnswers.map(answer => {
+                    return `<input type ="radio" id ="${index}" name="answer" value="#${answer}/>
+                    <label for"${index}>${answer}</label>`
+                }).join(''); 
+        return `
+                <div>
+                    <p>${question.text}</p>
+                    <form>
+                    ${answers}
+                        <div>
+                            <input type="submit"/>
+                    </form>
+                </div>
+        `
+    }
     /**
     * This function must return an HTML string
     */
