@@ -6,7 +6,7 @@ class Question extends Model{
      this.text = question.question;
      this.allAnswers = [question.correct_answer,...question.incorrect_answers];
      this.correctAnswer = question.correct_answer;
-     this.submittedAnswer = null 
+     this.submittedAnswer = null
     }
 
  submitAnswer(answer) {

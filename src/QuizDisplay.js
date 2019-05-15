@@ -11,10 +11,15 @@ class QuizDisplay extends Renderer {
 
   handleStartGame() {
     this.model.startGame();
-
   }
 
-  handleSubmitGame()
+  handleSubmitAnswer(event) {
+      event.preventDefault();
+      this.model.submitAnswer(event);
+      this._generateContinueScreen();
+  }
+
+
 
     _generateIntro() {
       return  `<div>
@@ -24,18 +29,21 @@ class QuizDisplay extends Renderer {
       
     }
 
-    _generateAskQuestion(Questions) {
-        const currentAnswer = allAnswers.map(answer => {
-                    return `<input type ="radio" id ="${index}" name="answer" value="#${answer}/>
-                    <label for"${index}>${answer}</label>`
+
+
+    _generateAskQuestion() {
+        const currentAnswers = this.model.currentQuestion().allAnswers.map((answer, index) => {
+                    return `<input type ="radio" name="answer" id="${index}" value="${answer}"/>
+                    <label for="${index}">${answer}</label>`
                 }).join(''); 
         return `
                 <div>
-                    <p>${question.text}</p>
-                    <form>
-                    ${answers}
-                        <div>
-                            <input type="submit"/>
+                    <p>${this.model.asked[0].text}</p>
+                    <form id="submit-form">
+                    ${currentAnswers}
+                    <div>
+                    <input type="submit"/>
+                    </div>
                     </form>
                 </div>
         `
@@ -49,33 +57,32 @@ class QuizDisplay extends Renderer {
       if (this.model.asked.length === 0) {
         html = this._generateIntro();
         console.log('intro')
-      } else if (this.model.active && (!question.userAnswer)) {
+      } else if (this.model.active && (!question.submittedAnswer)) {
         html = this._generateAskQuestion(question);
+      } else  {
+        html = this._generateContinueScreen(question);
       }
       return html;
     };
 
+    _generateContinueScreen() {
+        let current = this.model.currentQuestion().submittedAnswer;
+        let correct = this.model.currentQuestion().correctAnswer;
+        let answerResponse = '';
+        if (current === correct) {
+            answerResponse = `<p>You got it! The correct answer was ${correct}</p>`;
+        } else {
+            answerResponse = `<p><Sorry that's incorrect. You answered ${current}. The correct answer was ${correct}/p>`;
+        }
+        console.log(answerResponse);
+        return `
+                <div>
+                    <p>${this.model.asked[0].text}</p>
+                    ${answerResponse}
+                </div>
+        `
+    }
 
-      
-    
-  
-    /**
-    * This function must return an object
-    */
-   
-  
-    /**
-    * All event handler functions should call model methods, and end with
-    * model.update()
-    */ 
-   
-
-    // handleSubmitAnswer(event) {
-    //     event.preventDefault();
-    //     event.target.answer.value
-    // }
-
-    //call model onto the question 
-  }
+}
 
   export default QuizDisplay;

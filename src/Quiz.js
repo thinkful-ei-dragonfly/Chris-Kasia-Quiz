@@ -43,7 +43,29 @@ currentQuestion() {
   return this.asked[0];
 }
 
-nextQuestion() {
+submitAnswer(event) {
+  console.log(this.currentQuestion());
+  let answer = event.target.answer.value;
+  this.currentQuestion().submittedAnswer = answer;
+  this.checkAnswer(answer);
+  console.log(this.score);
+  this.update();
+}
+
+
+
+checkAnswer(answer) {
+  if (!answer) {
+    return null
+  }
+  console.log(answer);
+  if (answer.submittedAnswer === this.correctAnswer) {
+    this.scoreChange();
+  } 
+}
+
+
+nextQuestion(answer) {
   const current = this.currentQuestion();
   if (current && current.submittedAnswer === null) {
     throw new Error('must answer the question')
@@ -51,14 +73,13 @@ nextQuestion() {
   if (this.unasked.length === 0) {
     this.active = false;
     this.scoreHistory.unshift(this.score);
-    return endGame();
   }
   this.asked.unshift(this.unasked.pop());
-    this.update();
-    return this.asked[0];
+  this.update();
+  return this.asked[0];
 }
 
-scoreChange() {
+scoreChange(answer) {
   this.score = this.score + 1;
 }
 
@@ -68,10 +89,6 @@ changeScoreHistory() {
   }
 }
 
-endGame() {
-    this.active = false;
-    this.update();
-}
 } 
 
 export default Quiz;
