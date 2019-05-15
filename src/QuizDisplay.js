@@ -5,13 +5,22 @@ class QuizDisplay extends Renderer {
   getEvents() {
     return {
       'click .start-game': 'handleStartGame',
-      // 'submit form': `handleSubmitAnswer`
+      'submit form': `handleSubmitAnswer`
     };
   }
 
   handleStartGame() {
     this.model.startGame();
 
+  }
+
+  handleSubmitAnswer(event) {
+      event.preventDefault();
+      let answer = event.target.answer.value;
+      console.log(this.model.currentQuestion());
+      this.model.currentQuestion().submittedAnswer = answer;
+      console.log(answer);
+      this.model.nextQuestion();
   }
 
     _generateIntro() {
@@ -22,22 +31,23 @@ class QuizDisplay extends Renderer {
       
     }
 
-    // _generateAskQuestion(Questions) {
-    //     const currentAnswer = allAnswers.map(answer => {
-    //                 return `<input type ="radio" id ="${index}" name="answer" value="#${answer}/>
-    //                 <label for"${index}>${answer}</label>`
-    //             }).join(''); 
-    //     return `
-    //             <div>
-    //                 <p>${question.text}</p>
-    //                 <form>
-    //                 ${answers}
-    //                     <div>
-    //                         <input type="submit"/>
-    //                 </form>
-    //             </div>
-    //     `
-    // }
+    _generateAskQuestion() {
+        const currentAnswers = this.model.currentQuestion().allAnswers.map((answer, index) => {
+                    return `<input type ="radio" name="answer" id="${index}" value="${answer}"/>
+                    <label for="${index}">${answer}</label>`
+                }).join(''); 
+        return `
+                <div>
+                    <p>${this.model.asked[0].text}</p>
+                    <form id="submit-form">
+                    ${currentAnswers}
+                    <div>
+                    <input type="submit"/>
+                    </div>
+                    </form>
+                </div>
+        `
+    }
     /**
     * This function must return an HTML string
     */
@@ -53,27 +63,6 @@ class QuizDisplay extends Renderer {
       return html;
     };
 
-
-      
-    
-  
-    /**
-    * This function must return an object
-    */
-   
-  
-    /**
-    * All event handler functions should call model methods, and end with
-    * model.update()
-    */ 
-   
-
-    // handleSubmitAnswer(event) {
-    //     event.preventDefault();
-    //     event.target.answer.value
-    // }
-
-    //call model onto the question 
-  }
+}
 
   export default QuizDisplay;

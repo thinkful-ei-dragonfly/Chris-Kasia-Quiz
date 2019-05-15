@@ -30,7 +30,9 @@ class Quiz extends Model {
         let array = res.results;
         array.forEach(element => {
         this.unasked.push(new Question(element));
+        console.log(this.asked);
     });
+    this.checkAnswer();
     this.nextQuestion();
     this.update();
   })
@@ -43,7 +45,16 @@ currentQuestion() {
   return this.asked[0];
 }
 
-nextQuestion() {
+
+
+checkAnswer(answer) {
+  if (answer === this.correctAnswer) {
+    this.scoreChange();
+  } 
+}
+
+
+nextQuestion(answer) {
   const current = this.currentQuestion();
   if (current && current.submittedAnswer === null) {
     throw new Error('must answer the question')
@@ -51,14 +62,13 @@ nextQuestion() {
   if (this.unasked.length === 0) {
     this.active = false;
     this.scoreHistory.unshift(this.score);
-    return endGame();
   }
   this.asked.unshift(this.unasked.pop());
     this.update();
     return this.asked[0];
 }
 
-scoreChange() {
+scoreChange(answer) {
   this.score = this.score + 1;
 }
 
@@ -68,10 +78,6 @@ changeScoreHistory() {
   }
 }
 
-endGame() {
-    this.active = false;
-    this.update();
-}
 } 
 
 export default Quiz;
