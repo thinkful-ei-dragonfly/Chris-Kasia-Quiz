@@ -17,10 +17,13 @@ class QuizDisplay extends Renderer {
   handleSubmitAnswer(event) {
       event.preventDefault();
       let answer = event.target.answer.value;
-      console.log(this.model.currentQuestion());
       this.model.currentQuestion().submittedAnswer = answer;
       console.log(answer);
       this.model.nextQuestion();
+  }
+
+  handContinueQuiz() {
+
   }
 
     _generateIntro() {
@@ -62,6 +65,20 @@ class QuizDisplay extends Renderer {
       }
       return html;
     };
+
+    generateContinueScreen() {
+        return `
+                <div>
+                    <p>${this.model.asked[0].text}</p>
+                    <form id="submit-form">
+                    ${currentAnswers}
+                    <div>
+                    <input type="submit"/>
+                    </div>
+                    </form>
+                </div>
+        `
+    }
 
 }
 

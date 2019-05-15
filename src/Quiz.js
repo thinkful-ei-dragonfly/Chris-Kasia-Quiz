@@ -30,7 +30,6 @@ class Quiz extends Model {
         let array = res.results;
         array.forEach(element => {
         this.unasked.push(new Question(element));
-        console.log(this.asked);
     });
     this.checkAnswer();
     this.nextQuestion();
@@ -63,6 +62,7 @@ nextQuestion(answer) {
     this.active = false;
     this.scoreHistory.unshift(this.score);
   }
+  this.checkAnswer();
   this.asked.unshift(this.unasked.pop());
     this.update();
     return this.asked[0];

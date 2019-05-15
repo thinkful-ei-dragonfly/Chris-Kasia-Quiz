@@ -4,7 +4,7 @@ import Renderer from './lib/Renderer';
 class QuizStatus extends Renderer{
    template() {
     const score = this.model.score;
-    //  const hightScore = this.model.higthscore
+    const hightScore = this.model.higthscore
     const current = this.model.asked.length;
     const total = this.model.asked.length + this.model.unasked.length;
 
