@@ -47,19 +47,18 @@ submitAnswer(event) {
   console.log(this.currentQuestion());
   let answer = event.target.answer.value;
   this.currentQuestion().submittedAnswer = answer;
-  this.checkAnswer(answer);
+  this.checkAnswer(answer, this.currentQuestion().correctAnswer);
   console.log(this.score);
   this.update();
 }
 
-
-
-checkAnswer(answer) {
-  if (!answer) {
-    return null
-  }
-  console.log(answer);
-  if (answer.submittedAnswer === this.correctAnswer) {
+checkAnswer(submittedAnswer, correctAnswer) {
+  console.log(this.correctAnswer);
+  console.log(this);
+  // if (!answer) {
+  //   return null
+  // }
+  if (submittedAnswer === correctAnswer) {
     this.scoreChange();
   } 
 }
@@ -80,6 +79,7 @@ nextQuestion(answer) {
 }
 
 scoreChange(answer) {
+  console.log(answer);
   this.score = this.score + 1;
 }
 

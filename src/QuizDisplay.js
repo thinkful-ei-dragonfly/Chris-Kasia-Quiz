@@ -54,9 +54,9 @@ class QuizDisplay extends Renderer {
     template() {
       let html;
       const question = this.model.currentQuestion();
+      console.log(question);
       if (this.model.asked.length === 0) {
         html = this._generateIntro();
-        console.log('intro')
       } else if (this.model.active && (!question.submittedAnswer)) {
         html = this._generateAskQuestion(question);
       } else  {
@@ -72,7 +72,7 @@ class QuizDisplay extends Renderer {
         if (current === correct) {
             answerResponse = `<p>You got it! The correct answer was ${correct}</p>`;
         } else {
-            answerResponse = `<p><Sorry that's incorrect. You answered ${current}. The correct answer was ${correct}/p>`;
+            answerResponse = `<p>Sorry that's incorrect. You answered ${current}. The correct answer was ${correct}</p>`;
         }
         console.log(answerResponse);
         return `
