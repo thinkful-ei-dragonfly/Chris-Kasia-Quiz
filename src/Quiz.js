@@ -44,7 +44,6 @@ currentQuestion() {
 }
 
 submitAnswer(event) {
-  console.log(this.currentQuestion());
   let answer = event.target.answer.value;
   this.currentQuestion().submittedAnswer = answer;
   this.checkAnswer(answer, this.currentQuestion().correctAnswer);
@@ -63,8 +62,7 @@ checkAnswer(submittedAnswer, correctAnswer) {
   } 
 }
 
-
-nextQuestion(answer) {
+nextQuestion() {
   const current = this.currentQuestion();
   if (current && current.submittedAnswer === null) {
     throw new Error('must answer the question')
@@ -75,8 +73,11 @@ nextQuestion(answer) {
   }
   this.asked.unshift(this.unasked.pop());
   this.update();
+  console.log('am I here?')
+  console.log(this.asked);
   return this.asked[0];
 }
+
 
 scoreChange(answer) {
   console.log(answer);

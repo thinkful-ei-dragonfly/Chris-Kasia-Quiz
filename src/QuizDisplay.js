@@ -5,7 +5,8 @@ class QuizDisplay extends Renderer {
   getEvents() {
     return {
       'click .start-game': 'handleStartGame',
-      'submit form': `handleSubmitAnswer`
+      'submit form': `handleSubmitAnswer`,
+      'click #continue-button': 'handleContinueScreen'
     };
   }
 
@@ -16,10 +17,15 @@ class QuizDisplay extends Renderer {
   handleSubmitAnswer(event) {
       event.preventDefault();
       this.model.submitAnswer(event);
-      this._generateContinueScreen();
+      this._generateValidationScreen();
   }
 
-
+  handleContinueScreen(event){
+    event.preventDefault();
+    console.log(this);
+    this.model.nextQuestion();
+    this._generateAskQuestion();
+  }
 
     _generateIntro() {
       return  `<div>
@@ -54,18 +60,19 @@ class QuizDisplay extends Renderer {
     template() {
       let html;
       const question = this.model.currentQuestion();
-      console.log(question);
+      // console.log(question);
       if (this.model.asked.length === 0) {
         html = this._generateIntro();
       } else if (this.model.active && (!question.submittedAnswer)) {
         html = this._generateAskQuestion(question);
       } else  {
-        html = this._generateContinueScreen(question);
+        html = this._generateValidationScreen(question);
       }
       return html;
+      
     };
 
-    _generateContinueScreen() {
+    _generateValidationScreen() {
         let current = this.model.currentQuestion().submittedAnswer;
         let correct = this.model.currentQuestion().correctAnswer;
         let answerResponse = '';
@@ -79,9 +86,12 @@ class QuizDisplay extends Renderer {
                 <div>
                     <p>${this.model.asked[0].text}</p>
                     ${answerResponse}
+                    <button type='button' id='continue-button'>CONTINUE</button>
                 </div>
         `
     }
+
+   
 
 }
 

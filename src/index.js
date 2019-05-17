@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import './index.css';
 import Quiz from './Quiz';
 import QuizDisplay from './QuizDisplay'
 import QuizStatus from './QuizStatus'
