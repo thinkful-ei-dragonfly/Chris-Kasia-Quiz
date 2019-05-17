@@ -17,14 +17,14 @@ class QuizDisplay extends Renderer {
   handleSubmitAnswer(event) {
       event.preventDefault();
       this.model.submitAnswer(event);
-      this._generateValidationScreen();
+      // this._generateValidationScreen();
   }
 
   handleContinueScreen(event){
     event.preventDefault();
     console.log(this);
     this.model.nextQuestion();
-    this._generateAskQuestion();
+    // this._generateAskQuestion();
   }
 
     _generateIntro() {

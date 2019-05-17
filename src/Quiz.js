@@ -52,8 +52,6 @@ submitAnswer(event) {
 }
 
 checkAnswer(submittedAnswer, correctAnswer) {
-  console.log(this.correctAnswer);
-  console.log(this);
   // if (!answer) {
   //   return null
   // }
@@ -68,14 +66,16 @@ nextQuestion() {
     throw new Error('must answer the question')
   }
   if (this.unasked.length === 0) {
-    this.active = false;
     this.scoreHistory.unshift(this.score);
+    this.startGame();
   }
+  else {
   this.asked.unshift(this.unasked.pop());
   this.update();
-  console.log('am I here?')
+  console.log(this.unasked);
   console.log(this.asked);
   return this.asked[0];
+  }
 }
 
 
@@ -84,9 +84,9 @@ scoreChange(answer) {
   this.score = this.score + 1;
 }
 
-changeScoreHistory() {
+changeScoreHistory(score) {
   if (this.unasked.length === 0) {
-    this.scoreHistory.push
+    this.scoreHistory.push(score);
   }
 }
 
